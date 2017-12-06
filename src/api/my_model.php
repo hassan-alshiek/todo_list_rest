@@ -9,7 +9,7 @@ class MyModel
         $this->mysqli = new mysqli(
             '172.17.0.2',
             'root',
-            'toor',
+            'password',
             'todo_list',
             '3306'
         );
@@ -38,7 +38,7 @@ class MyModel
             $search = $this->_search($cols, $params);
             //order
             $order = $this->_order($cols, $params);
-            $sql = "SELECT * FROM list_items ORDER BY DONE ASC, DATE UPDATED DESC" .
+            $sql = "SELECT * FROM list_items " .
                 $search . $order;
             $result = $this->mysqli->query($sql);
 
@@ -83,6 +83,61 @@ class MyModel
                 }
             } else {
                 return $validate;
+            }
+        }
+
+        return $res;
+    }
+
+    /**
+     * Insert to vehicles table with minor rule checking
+     * @param int $id
+     * @param array $params
+     * @return array
+     */
+    public function db_put($id, $params = [])
+    {
+        $res = [];
+        if ($this->mysqli) {
+            $rules = [
+                'label' => [
+                    'max' => 100
+                ],
+                'done' => [
+                    'in_list' => [0, 1]
+                ]
+            ];
+            //validate
+            $validate = $this->_validate($rules, $params);
+            if ($validate['status']) {
+                $sql = "UPDATE list_items SET " . $validate['results']."WHERE list_item_id= ".$id;
+                if ($this->mysqli->query($sql) === TRUE) {
+                    return ["status" => TRUE, "results" => ['list_item_id'=> $id]];
+                } else {
+                    return ["status" => FALSE, "results" => $this->mysqli->error];
+                }
+            } else {
+                return $validate;
+            }
+        }
+
+        return $res;
+    }
+
+    /**
+     * Insert to vehicles table with minor rule checking
+     * @param int $id
+     * @return array
+     */
+    public function db_delete($id)
+    {
+        $res = [];
+        if ($this->mysqli) {
+            $sql = "DELETE FROM list_items WHERE list_item_id= ".$id;
+            if ($this->mysqli->query($sql) === TRUE) {
+                return ["status" => TRUE, "results" => ['list_item_id'=> $id]];
+            } else {
+                return ["status" => FALSE, "results" => $this->mysqli->error];
             }
         }
 
