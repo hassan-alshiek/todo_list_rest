@@ -39,6 +39,12 @@ abstract class API
             case 'GET':
                 $this->request = $this->_cleanInputs($_GET);
                 break;
+            case 'DELETE':
+                $this->request = $this->_cleanInputs($_GET);
+                break;
+            case 'PUT':
+                $this->request = $this->_cleanInputs($_GET);
+                break;
             default:
                 return $this->_response('Invalid Method', 405);
                 break;

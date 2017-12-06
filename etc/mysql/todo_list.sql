@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `list_items` (
   `label` varchar(100) NOT NULL,
   `done` enum('0','1') NOT NULL DEFAULT '0',
   `date_created` datetime DEFAULT CURRENT_TIMESTAMP,
-  `date_updated` datetime ON UPDATE CURRENT_TIMESTAMP,
+  `date_updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`list_item_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 

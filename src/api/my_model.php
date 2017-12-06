@@ -77,7 +77,7 @@ class MyModel
             if ($validate['status']) {
                 $sql = "INSERT INTO list_items SET " . $validate['results'];
                 if ($this->mysqli->query($sql) === TRUE) {
-                    return ["status" => TRUE, "results" => ['list_item_id'=> $this->mysqli->insert_id]];
+                    return ["status" => TRUE, "results" => ['list_item_id' => $this->mysqli->insert_id]];
                 } else {
                     return ["status" => FALSE, "results" => $this->mysqli->error];
                 }
@@ -91,34 +91,38 @@ class MyModel
 
     /**
      * Insert to vehicles table with minor rule checking
-     * @param int $id
      * @param array $params
      * @return array
      */
-    public function db_put($id, $params = [])
+    public function db_put($params = [])
     {
         $res = [];
-        if ($this->mysqli) {
-            $rules = [
-                'label' => [
-                    'max' => 100
-                ],
-                'done' => [
-                    'in_list' => [0, 1]
-                ]
-            ];
-            //validate
-            $validate = $this->_validate($rules, $params);
-            if ($validate['status']) {
-                $sql = "UPDATE list_items SET " . $validate['results']."WHERE list_item_id= ".$id;
-                if ($this->mysqli->query($sql) === TRUE) {
-                    return ["status" => TRUE, "results" => ['list_item_id'=> $id]];
+        if (!empty($params['list_item_id'])) {
+            if ($this->mysqli) {
+                $rules = [
+                    'list_item_id' => [
+                        'required'
+                    ],
+                    'done' => [
+                        'required',
+                        'in_list' => [0, 1]
+                    ]
+                ];
+                //validate
+                $validate = $this->_validate($rules, $params);
+                if ($validate['status']) {
+                    $sql = "UPDATE list_items SET " . $validate['results'] . " WHERE list_item_id= " . $params['list_item_id'];
+                    if ($this->mysqli->query($sql) === TRUE) {
+                        return ["status" => TRUE, "results" => ['list_item_id' => $params['list_item_id']]];
+                    } else {
+                        return ["status" => FALSE, "results" => $this->mysqli->error];
+                    }
                 } else {
-                    return ["status" => FALSE, "results" => $this->mysqli->error];
+                    return $validate;
                 }
-            } else {
-                return $validate;
             }
+        } else {
+            return ["status" => FALSE, "results" => []];
         }
 
         return $res;
@@ -126,19 +130,23 @@ class MyModel
 
     /**
      * Insert to vehicles table with minor rule checking
-     * @param int $id
+     * @param array $params
      * @return array
      */
-    public function db_delete($id)
+    public function db_delete($params = [])
     {
         $res = [];
-        if ($this->mysqli) {
-            $sql = "DELETE FROM list_items WHERE list_item_id= ".$id;
-            if ($this->mysqli->query($sql) === TRUE) {
-                return ["status" => TRUE, "results" => ['list_item_id'=> $id]];
-            } else {
-                return ["status" => FALSE, "results" => $this->mysqli->error];
+        if (!empty($params['list_item_id'])) {
+            if ($this->mysqli) {
+                $sql = "DELETE FROM list_items WHERE list_item_id= " . $params['list_item_id'];
+                if ($this->mysqli->query($sql) === TRUE) {
+                    return ["status" => TRUE, "results" => ['list_item_id' => $params['list_item_id']]];
+                } else {
+                    return ["status" => FALSE, "results" => $this->mysqli->error];
+                }
             }
+        } else {
+            return ["status" => FALSE, "results" => []];
         }
 
         return $res;

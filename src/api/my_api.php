@@ -34,6 +34,24 @@ class MyAPI extends API
                     return "Only accepts POST requests";
                 }
                 break;
+            case "delete":
+                if ($this->method == 'DELETE') {
+                    $MODEL = new MyModel();
+                    $res = $MODEL->db_delete($this->request);
+                    return ["status" => TRUE, "results" => $res];
+                } else {
+                    return "Only accepts DELETE requests";
+                }
+                break;
+            case "put":
+                if ($this->method == 'PUT') {
+                    $MODEL = new MyModel();
+                    $res = $MODEL->db_put($this->request);
+                    return ["status" => TRUE, "results" => $res];
+                } else {
+                    return "Only accepts PUT requests";
+                }
+                break;
             default:
                 break;
         }
