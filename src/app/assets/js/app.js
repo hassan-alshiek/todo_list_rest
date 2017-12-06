@@ -2,6 +2,7 @@ $(document).ready(function(){
     function get_items(){
         $('#list_items').fadeOut();
         $('#list_items').html('');
+        //Get done tasks
         $.get( "../api/index.php/todo_list?order=date_updated&sort=DESC&done=1", function( data ) {
             for (var i = 0; i < data.results.length; i++) {
                 $('#list_items').append('<li class="list-group-item">' +
@@ -18,6 +19,7 @@ $(document).ready(function(){
                 '</li>').hide().fadeIn();
             }
         });
+        //Get open Tasks
         $.get( "../api/index.php/todo_list?order=date_updated&sort=DESC&done=0", function( data ) {
             for (var i = 0; i < data.results.length; i++) {
                 $('#list_items').append('<li class="list-group-item">' +
