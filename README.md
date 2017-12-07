@@ -8,7 +8,13 @@
 
 ## Implementation
 Backend
+- Lightweight vanilla PHP REST API
 - Working CRUD
+    - GET = Fetch tasks
+    - POST = Add Task
+    - PUT = Update Task
+    - DELETE = Delete Task
+- Returns are JSON formatted
 - The GET call has a search by column function, a order by column as well as sort
     
     Query parameters:
@@ -19,5 +25,5 @@ Backend
 - MySQL used as DB
 
 Frontend
-- AJAX calls to backend
 - Bootstrap and JQuery
+- AJAX calls to backend API
