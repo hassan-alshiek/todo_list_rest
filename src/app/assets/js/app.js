@@ -49,7 +49,7 @@ $(document).ready(function(){
                     $("#new_item").val() +
                     '</label>' +
                     '<span class="pull-right">' +
-                    '<button class="btn btn-xs btn-default"> data-item-id="'+data.results[i].list_item_id+'"' +
+                    '<button class="btn btn-xs btn-default" data-item-id="'+data.results.list_item_id+'" >' +
                     '<i class="fa fa-trash del-item" aria-hidden="true"></i>' +
                     '</button>'+
                     '</span>'+
