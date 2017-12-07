@@ -18,8 +18,8 @@ Backend
 - The GET call has a search by column function, a order by column as well as sort
     
     Query parameters:
-    - [col]=[value] - Filter by column value (ex. vehicle_id=1&vehicle_name=Test)
-    - order=[col] - Order by a column(ex. order=vehicle_name)
+    - [col]=[value] - Filter by column value (ex. list_item_id=1&label=Test)
+    - order=[col] - Order by a column(ex. order=date_updated)
     - sort=[ASC,DESC] - Sort by ASC or DESC order
 - The POST and PUT call has minor rule checking implemented
 - MySQL used as DB
